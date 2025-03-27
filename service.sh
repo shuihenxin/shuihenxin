@@ -2,7 +2,7 @@ MODDIR="${0%/*}"
 #启动参数
 TIMEOUT=180         #完全解锁手机时间超过180秒启动失败
 BOOT_TIMEOUT=60   #开机超过60秒启动失败
-CHECK_INTERVAL=1   
+CHECK_INTERVAL=1   #
 
 # 配置参数
 LOGFILE="$MODDIR/日志.log"

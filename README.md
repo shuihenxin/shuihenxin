@@ -1,7 +1,6 @@
 ## Hi there 👋
 学习使用
-虚拟SD挂载模块
-参考诸多大佬抄的
+
 
 <!--
 **shuihenxin/shuihenxin** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.

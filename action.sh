@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 配置文件路径
+# 配置文件路径 
 MODDIR="${0%/*}"
 LOGFILE="$MODDIR/日志.log"
 CONFIG_FILE="$MODDIR/挂载目录.conf"

@@ -11,7 +11,7 @@ print_modname() {
    echo  "*******************************"
    echo ""
 }
-  
+   
 on_install() {
   echo  "- 正在释放文件"
   echo ""

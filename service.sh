@@ -26,47 +26,21 @@ am_broadcast() {
 }
 
 # 系统启动
-check_boot_complete() {
-    [ "$(getprop sys.boot_completed)" -eq 1 ]
+Wait_until_login() {
+    log "等待系统启动中..."
+    while [ "$(getprop sys.boot_completed)" != "1" ]; do
+        sleep 1
+    done
+    log "系统启动完成"
+    log "检查 /sdcard/Android 目录是否存在..."
+    while [ ! -d "/sdcard/Android" ]; do
+        sleep 1
+    done
+    log "/sdcard/Android 目录已就绪"
+    Boot_Toast 设备完全启动，开始执行挂载
 }
 
-# 输入限制解除
-check_input_unrestricted() {
-    dumpsys window policy | awk -F= '/mInputRestricted/ { 
-        gsub(/[[:space:]]/, "", $2); 
-        exit $2 != "false" 
-    }'
-}
-
-# 第一阶段：等待系统启动
-i=1
-while [ $i -le $BOOT_TIMEOUT ]; do
-    check_boot_complete && break
-    sleep $CHECK_INTERVAL
-    if [ $i -eq $BOOT_TIMEOUT ]; then
-        echo "错误：系统启动超时（${BOOT_TIMEOUT}秒）" >&2
-        Boot_Toast "阶段一启动失败😭"
-        exit 1
-    fi
-    i=$((i + 1))
-done
-
-# 第二阶段：等待输入解除
-j=1
-input_timeout=$((TIMEOUT - i))
-while [ $j -le $input_timeout ]; do
-    check_input_unrestricted && break
-    sleep $CHECK_INTERVAL
-    if [ $j -eq $input_timeout ]; then
-        echo "错误：输入限制解除超时（${input_timeout}秒）" >&2
-        Boot_Toast "阶段二启动失败😭"
-        exit 1
-    fi
-    j=$((j + 1))
-done
-
-#Boot_Toast "开机检测通过😋一阶段$i秒二阶段$j秒"
-log "开机成功😋一阶段$i秒二阶段$j秒"
+Wait_until_login
 
 # 安全创建目录（带权限验证）
 safe_create_dir() {
